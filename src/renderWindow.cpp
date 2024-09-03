@@ -4,7 +4,7 @@
 #include "../include/RenderWindow.hpp"
 
 RenderWindow::RenderWindow(const char* title, int width, int height){
-    window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     if(window == NULL){
         cout << "Window failed to init. Error: " << SDL_GetError() << endl;
     }
@@ -45,22 +45,10 @@ void RenderWindow::DrawCircle(SDL_Renderer *renderer,int x,int y,int radius){
     }
 }
 
-void RenderWindow::DrawDimple(SDL_Renderer* renderer, int x, int y) {
-    SDL_SetRenderDrawColor(renderer, 192, 192, 192, 255);  // Light grey for dimples
-    DrawCircle(renderer, x, y, 3);  // Draw small circles representing dimples
-}
-
-void RenderWindow::DrawGolfBall(SDL_Renderer* renderer, int x, int y, int radius) {
+void RenderWindow::DrawCrosshair(SDL_Renderer* renderer, int x, int y, int radius) {
     // Draw the outer circle
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // White color for the ball
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // White color for the circle to be filled
     DrawCircle(renderer, x, y, radius);
-
-    // Draw dimples (in a grid pattern for simplicity)
-    for (int dimpleX = x - radius / 2; dimpleX < x + radius / 2; dimpleX += 10) {
-        for (int dimpleY = y - radius / 2; dimpleY < y + radius / 2; dimpleY += 10) {
-            //DrawDimple(renderer, dimpleX, dimpleY);
-        }
-    }
 }
 
 void RenderWindow::clear(){

@@ -14,4 +14,6 @@ class Enemy{
         void spawnEnemy(vector<Enemies> &enemies, int width, int height);
         void enemyTimeOut(vector<Enemies> &enemies,Uint32 timeout);
         void checkCollision(vector<Enemies> &enemies, SDL_Point &playerPos);
+    private:
+        int count=0;
 };

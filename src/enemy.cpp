@@ -20,14 +20,15 @@ void Enemy::enemyTimeOut(vector<Enemies> &enemies,Uint32 timeout) {
         if(enemy.active && currentTime - enemy.spawnTime > timeout){
             enemy.active = false;
         }
-    }
+    } printf("\nMissed");
 }
 
 void Enemy::checkCollision(vector<Enemies> &enemies, SDL_Point &playerPos) {
     for(Enemies &enemy : enemies){
         if(enemy.active && SDL_PointInRect(&playerPos, &enemy.EnemyRect)){
             enemy.active = false;
-            printf("Hit");
+            printf("\nHit Object Score: %d",count);
+            count++;
         }
     }  
 }

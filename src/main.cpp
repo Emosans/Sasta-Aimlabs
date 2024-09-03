@@ -38,7 +38,7 @@ int main(int argc, char* argv[]){
     };
     
 
-    RenderWindow window("Golf",600,600);
+    RenderWindow window("Rank Improver",600,600);
 
     bool quit=false;
     SDL_Event event;
@@ -48,15 +48,15 @@ int main(int argc, char* argv[]){
             if(event.type==SDL_QUIT){
                 quit=true;
             } else if(event.type==SDL_MOUSEBUTTONDOWN){
-                SDL_GetMouseState(&mouseX,&mouseY);
-
-                printf("Mouse button clicked at: %d, %d\n", mouseX, mouseY);
-
-                ballPosX = mouseX;
-                ballPosY = mouseY;
-                playerPoint = {ballPosX, ballPosY};
                 enemy.checkCollision(enemies,playerPoint);
             }
+            SDL_GetMouseState(&mouseX,&mouseY);
+
+            //printf("Mouse button clicked at: %d, %d\n", mouseX, mouseY);
+
+            ballPosX = mouseX;
+            ballPosY = mouseY;
+            playerPoint = {ballPosX, ballPosY};
         }
 
         // Check if it's time to spawn a new enemy
@@ -79,7 +79,7 @@ int main(int argc, char* argv[]){
 
         //fill the player object on the renderer
         //SDL_SetRenderDrawColor(window.getRenderer(), 255,255,255, 255);
-        window.DrawGolfBall(window.getRenderer(),ballPosX,ballPosY,12);
+        window.DrawCrosshair(window.getRenderer(),ballPosX,ballPosY,12);
         
         //fill the enemy rect on the renderer
         SDL_SetRenderDrawColor(window.getRenderer(), 255,0,0, 255);
