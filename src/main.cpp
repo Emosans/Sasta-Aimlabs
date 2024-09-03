@@ -79,7 +79,7 @@ int main(int argc, char* argv[]){
 
         //fill the player object on the renderer
         //SDL_SetRenderDrawColor(window.getRenderer(), 255,255,255, 255);
-        window.DrawGolfBall(window.getRenderer(),ballPosX,ballPosY,20);
+        window.DrawGolfBall(window.getRenderer(),ballPosX,ballPosY,12);
         
         //fill the enemy rect on the renderer
         SDL_SetRenderDrawColor(window.getRenderer(), 255,0,0, 255);
