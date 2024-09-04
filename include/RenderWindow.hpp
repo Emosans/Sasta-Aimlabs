@@ -15,6 +15,7 @@ class RenderWindow{
         void DrawCircle(SDL_Renderer* renderer, int x, int y, int radius);
         void DrawCrosshair(SDL_Renderer* renderer, int x, int y, int radius);
         SDL_Renderer* getRenderer();
+        SDL_Window* getWindow();
         void cleanUp();
         void clear();
         void render(SDL_Texture* texture);

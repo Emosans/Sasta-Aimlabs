@@ -23,6 +23,8 @@ int main(int argc, char* argv[]){
     int mouseX,mouseY;
     int ballPosX = 300;
     int ballPosY = 300;
+    float sensitivity = 1.0f;
+    int prevMouseX,prevMouseY;
     SDL_Point playerPoint;
     Uint32 enemySpawnTime = 1500; // 1.5 seconds timeout before enemy disappears
     Uint32 enemySpawnInterval = 1000; // Spawn new enemy every 1 seconds
@@ -39,9 +41,12 @@ int main(int argc, char* argv[]){
     
 
     RenderWindow window("Rank Improver",600,600);
-
     bool quit=false;
     SDL_Event event;
+    SDL_ShowCursor(SDL_DISABLE);
+
+    // Lock the mouse inside the window
+    SDL_SetWindowGrab(window.getWindow(), SDL_TRUE);
 
     while(!quit){
         while(SDL_PollEvent(&event)!=0){
@@ -49,13 +54,39 @@ int main(int argc, char* argv[]){
                 quit=true;
             } else if(event.type==SDL_MOUSEBUTTONDOWN){
                 enemy.checkCollision(enemies,playerPoint);
+            } else if(event.type==SDL_KEYDOWN){
+                switch(event.key.keysym.sym){
+                    case SDLK_UP:
+                    sensitivity+=0.1f;
+                    break;
+                    case SDLK_DOWN:
+                    sensitivity-=0.1f;
+                    break;
+                    default:
+                    sensitivity=sensitivity;
+                }
             }
+            if (sensitivity < 0.1f) sensitivity = 0.1f;
+            printf("Sensitivity%.2f\n",sensitivity);
+
             SDL_GetMouseState(&mouseX,&mouseY);
+            prevMouseX=mouseX;
+            prevMouseY=mouseY;
+
+            int deltaX = (mouseX) * sensitivity;
+            int deltaY = (mouseY) * sensitivity;
 
             //printf("Mouse button clicked at: %d, %d\n", mouseX, mouseY);
+            ballPosX = (deltaX);
+            ballPosY = (deltaY);
 
-            ballPosX = mouseX;
-            ballPosY = mouseY;
+            if (ballPosX < 0) {ballPosX = 0; /*SDL_WarpMouseInWindow(window.getWindow(), mouseX, mouseY);*/}
+            if (ballPosX > WINDOW_WIDTH) {ballPosX = WINDOW_WIDTH;/*SDL_WarpMouseInWindow(window.getWindow(),0,0);*/}
+            if (ballPosY < 0) {ballPosY = 0;/*SDL_WarpMouseInWindow(window.getWindow(), mouseX, mouseY);*/}
+            if (ballPosY > WINDOW_HEIGHT) {ballPosY = WINDOW_HEIGHT;/*SDL_WarpMouseInWindow(window.getWindow(),0,0);*/}
+
+
+
             playerPoint = {ballPosX, ballPosY};
         }
 
@@ -77,10 +108,6 @@ int main(int argc, char* argv[]){
 
         window.clear();
 
-        //fill the player object on the renderer
-        //SDL_SetRenderDrawColor(window.getRenderer(), 255,255,255, 255);
-        window.DrawCrosshair(window.getRenderer(),ballPosX,ballPosY,12);
-        
         //fill the enemy rect on the renderer
         SDL_SetRenderDrawColor(window.getRenderer(), 255,0,0, 255);
         for(Enemy::Enemies &enemy : enemies){
@@ -88,6 +115,11 @@ int main(int argc, char* argv[]){
                 SDL_RenderFillRect(window.getRenderer(), &enemy.EnemyRect);
             }
         }
+
+        //fill the player object on the renderer
+        //SDL_SetRenderDrawColor(window.getRenderer(), 255,255,255, 255);
+        window.DrawCrosshair(window.getRenderer(),ballPosX,ballPosY,12);
+        
         window.display();
     }
     window.cleanUp();

@@ -20,7 +20,7 @@ void Enemy::enemyTimeOut(vector<Enemies> &enemies,Uint32 timeout) {
         if(enemy.active && currentTime - enemy.spawnTime > timeout){
             enemy.active = false;
         }
-    } printf("\nMissed");
+    }
 }
 
 void Enemy::checkCollision(vector<Enemies> &enemies, SDL_Point &playerPos) {

@@ -18,6 +18,10 @@ SDL_Renderer* RenderWindow::getRenderer(){
     return renderer;
 }
 
+SDL_Window* RenderWindow::getWindow(){
+    return window;
+}
+
 void RenderWindow::DrawCircle(SDL_Renderer *renderer,int x,int y,int radius){
     int offsetX, offsetY, d;
     offsetX = 0;
