@@ -33,8 +33,8 @@ int main(int argc, char* argv[]){
         if (gameState == Menu::MENU) {
             menu.render();
             menu.setMenu(renderer,gameState);
-        }else if (gameState == Menu::GRIDSHOT) {
-            menu.setGridShot(renderer,window);
+        }else if (gameState == Menu::MICROFLICK) {
+            menu.setMicroFlick(renderer,window);
             gameState = Menu::MENU;
         }
     }

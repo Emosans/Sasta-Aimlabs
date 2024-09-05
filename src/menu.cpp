@@ -11,6 +11,7 @@ using namespace std;
 void Menu::setMenu(SDL_Renderer* renderer, GameState &state) {
     this->renderer = renderer;
     gridShotButton = {200, 150, 200, 50};
+    microflicksButton = {200, 250, 200, 50};
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -19,10 +20,13 @@ void Menu::setMenu(SDL_Renderer* renderer, GameState &state) {
         } else if (event.type == SDL_MOUSEBUTTONDOWN) {
             int x, y;
             SDL_GetMouseState(&x, &y);
-            if (x > gridShotButton.x && x < gridShotButton.x + gridShotButton.w &&
+            /*if (x > gridShotButton.x && x < gridShotButton.x + gridShotButton.w &&
                 y > gridShotButton.y && y < gridShotButton.y + gridShotButton.h) {
                 state = GRIDSHOT;
-            } 
+            } else */if (x > microflicksButton.x && x < microflicksButton.x + microflicksButton.w &&
+                       y > microflicksButton.y && y < microflicksButton.y + microflicksButton.h) {
+                state = MICROFLICK;
+            }
         }
     }
 }
@@ -35,10 +39,14 @@ void Menu::render(){
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderFillRect(renderer, &gridShotButton);
 
+    //microflick button
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderFillRect(renderer, &microflicksButton);
+
     SDL_RenderPresent(renderer);
 }
 
-void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
+void Menu::setMicroFlick(SDL_Renderer* renderer,RenderWindow window){
 
     const int WINDOW_WIDTH = 580;
     const int WINDOW_HEIGHT = 600;
@@ -65,7 +73,8 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
         }
     };
     
-
+    Menu::GameState gameState;
+    Menu menu;
     
     bool quit=false;
     SDL_Event event;
@@ -77,9 +86,11 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
     while(!quit){
         while(SDL_PollEvent(&event)!=0){
             if(event.type==SDL_QUIT){
+                window.cleanUp();
+                SDL_Quit();
                 SDL_ShowCursor(SDL_ENABLE);
                 SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
-                Menu::GameState gameState = Menu::QUIT;
+                gameState = Menu::QUIT;
                 quit=true;
             } else if(event.type==SDL_MOUSEBUTTONDOWN){
                 enemy.checkCollision(enemies,playerPoint);
@@ -95,6 +106,8 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
                     sensitivity=sensitivity;
                 }
             }
+
+
             if (sensitivity < 0.1f) sensitivity = 0.1f;
             printf("Sensitivity%.2f\n",sensitivity);
 
@@ -150,5 +163,8 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
         window.DrawCrosshair(renderer,ballPosX,ballPosY,12);
         
         window.display();
+
+        
     }
+    exit(0);
 }

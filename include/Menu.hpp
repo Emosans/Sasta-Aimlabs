@@ -19,9 +19,10 @@ public:
     void setMenu(SDL_Renderer* renderer,GameState &state);
     void render();
     void setGridShot(SDL_Renderer* renderer,RenderWindow window);
-    void setMicroFlick(SDL_Renderer* renderer);
+    void setMicroFlick(SDL_Renderer* renderer,RenderWindow window);
 
 private:
     SDL_Renderer* renderer;
     SDL_Rect gridShotButton;
+    SDL_Rect microflicksButton;
 };
