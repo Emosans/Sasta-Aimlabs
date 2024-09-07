@@ -38,7 +38,7 @@ void Enemy::updateEnemyPosition(vector<Enemies>& enemies, int stepX) {
     for (Enemies& enemy : enemies) {
         if (enemy.active) {
             enemy.EnemyRect.x += stepX; // Move the enemy by stepX
-            // Optional: Reset position if it moves off-screen
+            //Reset position if it moves off-screen
             if (enemy.EnemyRect.x > 500) {
                 enemy.EnemyRect.x = 0;
             }
