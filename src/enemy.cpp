@@ -8,7 +8,7 @@ using namespace std;
 
 void Enemy::spawnEnemy(vector<Enemies> &enemies, int width, int height) {
     Enemies newEnemy;
-    newEnemy.EnemyRect = {rand() % width, rand() % height, 32, 32};
+    newEnemy.EnemyRect = {(rand()%width), rand() % height, 32, 32};
     newEnemy.spawnTime = SDL_GetTicks();
     newEnemy.active = true;
     enemies.push_back(newEnemy);
@@ -31,4 +31,17 @@ void Enemy::checkCollision(vector<Enemies> &enemies, SDL_Point &playerPos) {
             count++;
         }
     }  
+}
+
+
+void Enemy::updateEnemyPosition(vector<Enemies>& enemies, int stepX) {
+    for (Enemies& enemy : enemies) {
+        if (enemy.active) {
+            enemy.EnemyRect.x += stepX; // Move the enemy by stepX
+            // Optional: Reset position if it moves off-screen
+            if (enemy.EnemyRect.x > 500) {
+                enemy.EnemyRect.x = 0;
+            }
+        }
+    }
 }

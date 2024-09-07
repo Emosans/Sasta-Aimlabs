@@ -13,6 +13,7 @@ public:
         MENU,
         GRIDSHOT,
         MICROFLICK,
+        TRACKING,
         QUIT
     };
 
@@ -20,9 +21,11 @@ public:
     void render();
     void setGridShot(SDL_Renderer* renderer,RenderWindow window);
     void setMicroFlick(SDL_Renderer* renderer,RenderWindow window);
+    void setTracking(SDL_Renderer* renderer,RenderWindow window);
 
 private:
     SDL_Renderer* renderer;
     SDL_Rect gridShotButton;
     SDL_Rect microflicksButton;
+    SDL_Rect trackingButton;
 };

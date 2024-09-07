@@ -39,6 +39,9 @@ int main(int argc, char* argv[]){
         } else if (gameState == Menu::MICROFLICK) {
             menu.setMicroFlick(renderer,window);
             gameState = Menu::MENU;
+        } else if (gameState == Menu::TRACKING) {
+            menu.setTracking(renderer,window);
+            gameState = Menu::MENU;
         }
     }
 
