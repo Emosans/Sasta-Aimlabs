@@ -2,6 +2,7 @@
 #include<SDL_image.h>
 #include<iostream>
 #include<string>
+#include<SDL_ttf.h>
 using namespace std;
 
 #include "../include/Menu.hpp"
@@ -9,6 +10,11 @@ using namespace std;
 #include "../include/RenderWindow.hpp"
 
 void Menu::setMenu(SDL_Renderer* renderer, GameState &state) {
+
+    if(TTF_Init() ==-1){
+        printf("Failed");
+    }
+
     this->renderer = renderer;
     gridShotButton = {200, 150, 200, 50};
     microflicksButton = {200, 250, 200, 50};
@@ -51,7 +57,35 @@ void Menu::render(){
     SDL_SetRenderDrawColor(renderer,0,255,0,255);
     SDL_RenderFillRect(renderer,&trackingButton);
 
+    SDL_Color whiteColor = {255, 255, 255};
+    renderButtonText("Gridshot", gridShotButton, whiteColor);
+    renderButtonText("Microflicks", microflicksButton, whiteColor);
+    renderButtonText("Tracking", trackingButton, whiteColor);
+
     SDL_RenderPresent(renderer);
+}
+
+SDL_Texture* Menu::createTextTexture(const char* text, SDL_Color color) {
+    font = TTF_OpenFont("C:/Users/shrey/Downloads/mononoki/mononoki-Regular.ttf", 24);
+    // Render text surface
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, color);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_FreeSurface(textSurface);
+    return textTexture;
+}
+
+void Menu::renderButtonText(const char* text, SDL_Rect buttonRect, SDL_Color color) {
+    SDL_Texture* textTexture = createTextTexture(text, color);
+    int textWidth, textHeight;
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &textWidth, &textHeight);
+    SDL_Rect textRect = {
+        buttonRect.x + (buttonRect.w - textWidth) / 2,
+        buttonRect.y + (buttonRect.h - textHeight) / 2,
+        textWidth,
+        textHeight
+    };
+    SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
+    SDL_DestroyTexture(textTexture);
 }
 
 void Menu::setMicroFlick(SDL_Renderer* renderer,RenderWindow window){
@@ -364,9 +398,7 @@ void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
                 SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
                 gameState = Menu::QUIT;
                 quit=true;
-            } else if(event.type==SDL_MOUSEBUTTONDOWN){
-                enemy.checkCollision(enemies,playerPoint);
-            } else if(event.type==SDL_KEYDOWN){
+            }  else if(event.type==SDL_KEYDOWN){
                 switch(event.key.keysym.sym){
                     case SDLK_UP:
                     sensitivity+=0.1f;
@@ -378,7 +410,7 @@ void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
                     sensitivity=sensitivity;
                 }
             }
-
+            enemy.checkEnemyTracking(enemies,playerPoint);
 
 
             if (sensitivity < 0.1f) sensitivity = 0.1f;
@@ -417,7 +449,7 @@ void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
         if (!activeEnemyExists && SDL_GetTicks() - lastSpawnTime > enemySpawnInterval) {
 
             enemy.spawnEnemy(enemies, WINDOW_WIDTH, WINDOW_HEIGHT);
-            enemy.updateEnemyPosition(enemies,5);
+            enemy.updateEnemyPosition(enemies,2);
             lastSpawnTime = SDL_GetTicks();
         }
         

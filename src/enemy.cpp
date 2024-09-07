@@ -33,6 +33,19 @@ void Enemy::checkCollision(vector<Enemies> &enemies, SDL_Point &playerPos) {
     }  
 }
 
+void Enemy::checkEnemyTracking(vector<Enemies> &enemies, SDL_Point &playerPos){
+    int life = 6;
+    for(Enemies &enemy : enemies){
+        if(enemy.active && SDL_PointInRect(&playerPos, &enemy.EnemyRect)){
+            life--;
+            printf("\nHit Object Score: %d",count);
+            if(life==0){
+                enemy.active = false;
+            }
+            count++;
+        }
+    } 
+}
 
 void Enemy::updateEnemyPosition(vector<Enemies>& enemies, int stepX) {
     for (Enemies& enemy : enemies) {
