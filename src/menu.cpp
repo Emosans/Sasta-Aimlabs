@@ -133,6 +133,7 @@ void Menu::setMicroFlick(SDL_Renderer* renderer,RenderWindow window){
                 SDL_ShowCursor(SDL_ENABLE);
                 SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
                 gameState = Menu::QUIT;
+                exit(0);
                 quit=true;
             } else if(event.type==SDL_MOUSEBUTTONDOWN){
                 enemy.checkCollision(enemies,playerPoint);
@@ -273,6 +274,7 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
                 SDL_ShowCursor(SDL_ENABLE);
                 SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
                 gameState = Menu::QUIT;
+                exit(0);
                 quit=true;
             } else if(event.type==SDL_MOUSEBUTTONDOWN){
                 enemy.checkCollision(enemies,playerPoint);
@@ -407,6 +409,7 @@ void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
                 SDL_ShowCursor(SDL_ENABLE);
                 SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
                 gameState = Menu::QUIT;
+                exit(0);
                 quit=true;
             }  else if(event.type==SDL_KEYDOWN){
                 switch(event.key.keysym.sym){
