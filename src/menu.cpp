@@ -144,6 +144,9 @@ void Menu::setMicroFlick(SDL_Renderer* renderer,RenderWindow window){
                     case SDLK_DOWN:
                     sensitivity-=0.1f;
                     break;
+                    case SDLK_ESCAPE:
+                    quit=true;
+                    break;
                     default:
                     sensitivity=sensitivity;
                 }
@@ -209,7 +212,9 @@ void Menu::setMicroFlick(SDL_Renderer* renderer,RenderWindow window){
 
         
     }
-    exit(0);
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
+    gameState = MENU;
 }
 
 void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
@@ -279,6 +284,9 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
                     case SDLK_DOWN:
                     sensitivity-=0.1f;
                     break;
+                    case SDLK_ESCAPE:
+                    quit=true;
+                    break;
                     default:
                     sensitivity=sensitivity;
                 }
@@ -346,7 +354,9 @@ void Menu::setGridShot(SDL_Renderer* renderer,RenderWindow window){
 
         
     }
-    exit(0);
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
+    gameState = MENU;
 }
 
 void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
@@ -405,6 +415,9 @@ void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
                     break;
                     case SDLK_DOWN:
                     sensitivity-=0.1f;
+                    break;
+                    case SDLK_ESCAPE:
+                    quit=true;
                     break;
                     default:
                     sensitivity=sensitivity;
@@ -475,5 +488,7 @@ void Menu::setTracking(SDL_Renderer* renderer,RenderWindow window){
 
 
     }
-    exit(0);
+    SDL_ShowCursor(SDL_ENABLE);
+    SDL_SetWindowGrab(window.getWindow(),SDL_FALSE);
+    gameState = MENU;
 }

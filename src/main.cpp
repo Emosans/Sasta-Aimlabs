@@ -14,6 +14,9 @@ const int ENEMY_WIDTH = 32;
 #include "../include/Enemy.hpp"
 #include "../include/Menu.hpp"
 
+Menu menu;
+Menu::GameState gameState = Menu::MENU;
+
 int main(int argc, char* argv[]){
     if(SDL_INIT_VIDEO<0){
         printf("Failed");
@@ -23,8 +26,6 @@ int main(int argc, char* argv[]){
     SDL_Renderer* renderer = window.getRenderer();
     SDL_Window* gridWindow = window.getWindow();
 
-    Menu menu;
-    Menu::GameState gameState = Menu::MENU;
     menu.setMenu(renderer,gameState);
 
     bool running = true;
@@ -35,13 +36,22 @@ int main(int argc, char* argv[]){
             menu.setMenu(renderer,gameState);
         } else if (gameState == Menu::GRIDSHOT) {
             menu.setGridShot(renderer,window);
-            gameState = Menu::MENU;
+            if(gameState = Menu::MENU){
+                menu.render();
+                menu.setMenu(renderer,gameState);
+            }
         } else if (gameState == Menu::MICROFLICK) {
             menu.setMicroFlick(renderer,window);
-            gameState = Menu::MENU;
+            if(gameState = Menu::MENU){
+                menu.render();
+                menu.setMenu(renderer,gameState);
+            }
         } else if (gameState == Menu::TRACKING) {
             menu.setTracking(renderer,window);
-            gameState = Menu::MENU;
+            if(gameState = Menu::MENU){
+                menu.render();
+                menu.setMenu(renderer,gameState);
+            }
         }
     }
 
